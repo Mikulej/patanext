@@ -37,6 +37,10 @@ window/vsync/vsync_mode=0
 
 enabled=PackedStringArray("res://addons/autoanim/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [gdnative]
 
 singletons=[]

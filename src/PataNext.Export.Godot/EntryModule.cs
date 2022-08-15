@@ -169,6 +169,8 @@ public partial class EntryModule : HostModule
 
                     SpawnAbility<DefaultMarchAbility>();
                     SpawnAbility<DefaultJumpAbility>();
+                    SpawnAbility<DefaultBackwardAbility>();
+                    SpawnAbility<DefaultRetreatAbility>();
                 });
             }
         });

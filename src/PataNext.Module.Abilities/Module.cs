@@ -38,7 +38,13 @@ public class Module : HostModule
                 new DefaultMarchScript(scope),
                 
                 new DefaultJumpAbility.Provider(scope),
-                new DefaultJumpScript(scope)
+                new DefaultJumpScript(scope),
+
+                new DefaultBackwardAbility.Provider(scope),
+                new DefaultBackwardScript(scope),
+
+                new DefaultRetreatAbility.Provider(scope),
+                new DefaultRetreatScript(scope)
             });
         });
     }

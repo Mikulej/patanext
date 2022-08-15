@@ -37,6 +37,8 @@ public partial class CreateCommandSystem : SimulationSystem
         Jump(cmd, group);
         Party(cmd, group);
         Summon(cmd, group);
+        Backward(cmd,group);
+        Retreat(cmd,group);
 
         static void March(Commands cmd, UEntityHandle group)
         {
@@ -98,6 +100,24 @@ public partial class CreateCommandSystem : SimulationSystem
             buffer.Add(RhythmCommandAction.WithOffset(2, 0.5f, (int) DefaultCommandKeys.Down));
             buffer.Add(RhythmCommandAction.WithOffset(3, 0, (int) DefaultCommandKeys.Down));
         }
+        static void Backward(Commands cmd, UEntityHandle group)
+        {
+            var (ent, buffer) = Create(cmd, group, "backward");
+            cmd.AddBackwardCommand(ent);
+            buffer.Add(RhythmCommandAction.With(0, (int) DefaultCommandKeys.Up));
+            buffer.Add(RhythmCommandAction.With(1, (int) DefaultCommandKeys.Left));
+            buffer.Add(RhythmCommandAction.With(2, (int) DefaultCommandKeys.Up));
+            buffer.Add(RhythmCommandAction.With(3, (int) DefaultCommandKeys.Left));
+        }
+        static void Retreat(Commands cmd, UEntityHandle group)
+        {
+            var (ent, buffer) = Create(cmd, group, "retreat");
+            cmd.AddRetreatCommand(ent);
+            buffer.Add(RhythmCommandAction.With(0, (int) DefaultCommandKeys.Right));
+            buffer.Add(RhythmCommandAction.With(1, (int) DefaultCommandKeys.Left));
+            buffer.Add(RhythmCommandAction.With(2, (int) DefaultCommandKeys.Right));
+            buffer.Add(RhythmCommandAction.With(3, (int) DefaultCommandKeys.Left));
+        }
 
         static (UEntityHandle output, BufferData<RhythmCommandAction> buffer) Create(Commands cmd, UEntityHandle group, string identifier)
         {
@@ -110,7 +130,7 @@ public partial class CreateCommandSystem : SimulationSystem
             return (ent, buffer);
         }
     }
-
+    
     private partial record struct Commands :
         ICmdEntityAdmin,
         ICmdLinkedEntityAdmin,
@@ -125,6 +145,8 @@ public partial class CreateCommandSystem : SimulationSystem
         JumpCommand.Cmd.IAdmin,
         PartyCommand.Cmd.IAdmin,
         SummonCommand.Cmd.IAdmin,
+        BackwardCommand.Cmd.IAdmin,
+        RetreatCommand.Cmd.IAdmin,
         // required for factory
         CommandActions.Cmd.IAdmin,
         CommandDuration.Cmd.IAdmin;
